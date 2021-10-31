@@ -39,7 +39,7 @@ export function Typewriter({
 
   return (
     <span className={className}>
-      {TextWrapper ? <TextWrapper>{text}</TextWrapper> : text}
+      <TextWrapper>{children}</TextWrapper>
       {isBlinking ? (
         <span className={cursorClassName || 'blinkingCursor'}>{cursor}</span>
       ) : null}
