@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react'
 
 export interface TypewriterProps {
-  string: string
+  children: string
   delay?: number
   stopBlinkinOnComplete?: any
   className?: string
   onComplete: () => void
   cursor?: string
   cursorClassName?: string
+  TextWrapper: any
 }
 
 export function Typewriter({
-  string,
+  TextWrapper,
   delay = 100,
+  children,
   stopBlinkinOnComplete = false,
   className,
   onComplete = () => {},
@@ -24,9 +26,9 @@ export function Typewriter({
   const [isBlinking, setBlinking] = useState(true)
 
   useEffect(() => {
-    if (pointer < string.length) {
+    if (pointer < children.length) {
       setTimeout(() => {
-        setText(text + string.charAt(pointer))
+        setText(text + children.charAt(pointer))
         setPointer(pointer + 1)
       }, delay)
     } else {
@@ -37,7 +39,9 @@ export function Typewriter({
 
   return (
     <span className={className}>
-      {text}
+      {TextWrapper
+        ? (props: any) => <TextWrapper {...props}>{text}</TextWrapper>
+        : text}
       {isBlinking ? (
         <span className={cursorClassName || 'blinkingCursor'}>{cursor}</span>
       ) : null}
